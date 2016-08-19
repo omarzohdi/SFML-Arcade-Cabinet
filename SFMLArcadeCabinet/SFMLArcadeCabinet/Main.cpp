@@ -38,7 +38,7 @@ bool check()
 	return 1;
 };
 
-int main(void)
+int main_(void)
 {
 	srand(time(0));
 
