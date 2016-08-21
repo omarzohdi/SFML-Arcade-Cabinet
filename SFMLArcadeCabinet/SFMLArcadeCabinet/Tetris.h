@@ -1,19 +1,16 @@
-#pragma once
+#ifndef TETRIS
+#define TETRIS
 
 #include "Game.h"
-
-const int M = 20;
-const int N = 10;
-
-// Game Field
 
 struct Point { int x, y; };
 
 class Tetris : Game
 {
 private:
+	enum { M = 20 , N = 10};
 
-	Point a[4] = { 0 }, b[4] = { 0 };
+	Point a[4] = {0}, b[4] = { 0 };
 	int field[M][N] = { 0 };
 
 	int figures[7][4] = {
@@ -27,25 +24,28 @@ private:
 	};
 
 	int dx = 0, colorNum = 1;
-	float timer = 0, delay = 0.3;
+	float timer = 0.0f, delay = 0.3f;
 	bool rotate = 0;
-	sf::Clock clock;
 
 	sf::Sprite s;
 	sf::Texture t;
 
 	bool checkCollision();
+	void checkLine();
+
 	void MovePiece();
 	void RotatePiece();
-	void Tick();
-	void ResetVars();
+
+	void Tick(sf::Clock& clock);
+	void ResetVars(sf::Clock& clock);
 
 public:
 	Tetris();
 	~Tetris();
 
-	void Update();
+	void Update(sf::Clock& clock);
 	void Draw(sf::RenderWindow &window);
 	void CatchEvents(sf::Event& e);
-	
 };
+
+#endif

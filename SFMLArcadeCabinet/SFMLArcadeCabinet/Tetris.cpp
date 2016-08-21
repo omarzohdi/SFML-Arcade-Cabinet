@@ -2,7 +2,7 @@
 
 Tetris::Tetris()
 {
-	srand(time(0));
+	srand(unsigned int(time(0)));
 	t.loadFromFile("images/tetris/tiles.png");
 	s.setTexture(t, true);
 	s.setTextureRect(sf::IntRect(0, 0, 18, 18));
@@ -18,25 +18,27 @@ void Tetris::CatchEvents(sf::Event& e)
 		if (e.key.code == sf::Keyboard::Up) rotate = true;
 		else if (e.key.code == sf::Keyboard::Left) dx = -1;
 		else if (e.key.code == sf::Keyboard::Right) dx = 1;
+	
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) delay = 0.05f;
 }
-void Tetris::Update()
+void Tetris::Update(sf::Clock& clock)
 {
 	this->MovePiece();
 	this->RotatePiece();
-	this->Tick();
+	this->Tick(clock);
+	this->checkLine();
 
-	this->ResetVars();
+	this->ResetVars(clock);
 }
 
-void Tetris::ResetVars()
+void Tetris::ResetVars(sf::Clock& clock)
 {
 	float time = clock.getElapsedTime().asSeconds();
-	clock.restart();
 	timer += time;
 
 	dx = 0;
-	rotate = 0;
-	delay = 0.3;
+	rotate = 0.0f;
+	delay = 0.3f;
 }
 
 void Tetris::Draw(sf::RenderWindow &window)
@@ -46,8 +48,8 @@ void Tetris::Draw(sf::RenderWindow &window)
 		for (int j = 0; j < N; j++)
 		{
 			if (field[i][j] == 0) continue;
-
-			s.setPosition(j * 18, i * 18);
+			s.setTextureRect(sf::IntRect(field[i][j] * 18, 0, 18, 18));
+			s.setPosition( float(j * 18), float(i * 18));
 			window.draw(s);
 		}
 	}
@@ -55,7 +57,8 @@ void Tetris::Draw(sf::RenderWindow &window)
 	//draw the sprite into the game area.
 	for (int i = 0; i < 4; i++)
 	{
-		s.setPosition(a[i].x * 18, a[i].y * 18);
+		s.setTextureRect(sf::IntRect(colorNum * 18, 0, 18, 18));
+		s.setPosition(float(a[i].x * 18), float(a[i].y * 18));
 		window.draw(s);
 	}
 
@@ -70,6 +73,23 @@ bool Tetris::checkCollision()
 	}
 	return 1;
 };
+
+void Tetris::checkLine()
+{
+	int k = M - 1;
+	for (int i = M - 1; i > 0; i--)
+	{
+		int count = 0;
+		for (int j = 0; j < N; j++)
+		{
+			if (field[i][j]) count++;
+			field[k][j] = field[i][j];
+
+		}
+		if (count < N)  k--;
+
+	}
+}
 
 void Tetris::MovePiece()
 {
@@ -98,7 +118,7 @@ void Tetris::RotatePiece()
 	}
 }
 
-void Tetris::Tick()
+void Tetris::Tick(sf::Clock& clock)
 {
 	if (timer>delay)
 	{

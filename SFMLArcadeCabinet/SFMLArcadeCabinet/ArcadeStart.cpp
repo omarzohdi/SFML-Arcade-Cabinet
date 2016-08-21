@@ -1,10 +1,11 @@
 #include <SFML/Graphics.hpp>
 #include <time.h>
 #include "Tetris.h"
-int main(void)
-{
-	Tetris T;
 
+int main(void)
+{	
+	Tetris T;
+	sf::Clock clock;
 
 	sf::RenderWindow window(sf::VideoMode(320, 480), "Arcade Cabinet");
 
@@ -21,9 +22,10 @@ int main(void)
 
 		window.clear(sf::Color::Black);
 		
-		T.Update();
+		T.Update(clock);
 		T.Draw(window);
 		
+		clock.restart();
 		window.display();
 	}
 
