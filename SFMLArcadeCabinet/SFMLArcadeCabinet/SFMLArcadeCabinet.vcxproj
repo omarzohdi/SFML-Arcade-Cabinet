@@ -73,6 +73,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ArcadeManager.cpp" />
+    <ClCompile Include="ArcadeMenu.cpp" />
     <ClCompile Include="ArcadeStart.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -82,6 +84,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ArcadeManager.h" />
+    <ClInclude Include="ArcadeMenu.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Tetris.h" />
   </ItemGroup>

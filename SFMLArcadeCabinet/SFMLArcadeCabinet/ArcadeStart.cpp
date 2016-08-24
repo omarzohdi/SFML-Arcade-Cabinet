@@ -1,14 +1,16 @@
 #include <SFML/Graphics.hpp>
 #include <time.h>
-#include "Tetris.h"
+
+#include "ArcadeManager.h"
 
 int main(void)
 {	
-	Tetris T;
-	sf::Clock clock;
+	ArcadeManager Manager;
 
+	sf::Clock clock;
 	sf::RenderWindow window(sf::VideoMode(320, 480), "Arcade Cabinet");
 
+	Manager.Start();
 	while (window.isOpen())
 	{
 		sf::Event e;
@@ -16,18 +18,13 @@ int main(void)
 		{
 			if (e.type == sf::Event::Closed)
 				window.close();
-
-			T.CatchEvents(e);
+			Manager.Events(e);
 		}
 
-		window.clear(sf::Color::Black);
-		
-		T.Update(clock);
-		T.Draw(window);
-		
-		clock.restart();
-		window.display();
+		Manager.Process(clock, window);
 	}
+
+	Manager.Stop();
 
 	return 0;
 }
