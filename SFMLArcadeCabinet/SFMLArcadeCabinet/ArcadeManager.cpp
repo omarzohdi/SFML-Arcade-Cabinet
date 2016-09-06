@@ -2,76 +2,42 @@
 
 //Menu to select Games.
 
-ArcadeManager::ArcadeManager()
+ArcadeManager::ArcadeManager() {}
+
+ArcadeManager::~ArcadeManager() {}
+
+void ArcadeManager::Start() 
 {
-	this->arcademenu = new ArcadeMenu();
-	this->tetris = new Tetris();
+	this->started = true;
+
+	this->App = new sf::RenderWindow(sf::VideoMode(320, 480), "Arcade Cabinet");
+	this->App->setMouseCursorVisible(false);
+	
+	///Add Games to List//
+	this->Games.push_back(&am);
+	this->Games.push_back(&t);
 }
 
-ArcadeManager::~ArcadeManager()
+void ArcadeManager::Stop() 
 {
-}
+	delete this->App;
+	this->started = false;
 
-void ArcadeManager::Start()
-{
-	this->currGame = tetris_;
-	this->runningApp = tetris;
-}
-
-void ArcadeManager::Stop()
-{
-	delete tetris;
-	delete arcademenu;
-}
-
-void ArcadeManager::Events(sf::Event & e)
-{
-	if (e.type == sf::Event::KeyPressed)
+	///Clear List///
+	for (std::vector< Game* >::iterator it = Games.begin(); it != Games.end(); ++it)
 	{
-		if (e.key.code == sf::Keyboard::Escape)
+		delete (*it);
+	}
+	Games.clear();
+}
+
+void ArcadeManager::Process()
+{
+	if (this->started)
+	{
+		while (this->currgame >= 0)
 		{
-			currGame = menu_;
-			ChangeGame = true;
+			this->currgame = this->Games[this->currgame]->Run(*App, this->clock);
 		}
 	}
-
-	this->runningApp->CatchEvents(e);
-}
-
-void ArcadeManager::Process(sf::Clock& clock, sf::RenderWindow &window)
-{
-	this->Update(clock);
-	this->Draw(window);
-
-	if (this->ChangeGame)
-	{
-		switch ( currGame)
-		{
-			case menu_:
-				this->runningApp = this->arcademenu;
-			break;
-			
-			case tetris_:
-				this->runningApp = this->tetris;
-			break;
-		
-			default:
-			break;
-		}
-		
-		this->ChangeGame = false;
-	}
-}
-
-void ArcadeManager::Update(sf::Clock& clock)
-{
-	this->runningApp->Update(clock);
-	clock.restart();
-}
-
-void ArcadeManager::Draw(sf::RenderWindow &window)
-{
-	window.clear(sf::Color::Black);
-	this->runningApp->Draw(window);
-	window.display();
 }

@@ -9,14 +9,16 @@ class ArcadeManager
 private:
 	enum GameId { tetris_ , arkanoid_ , menu_ };
 
-	ArcadeMenu * arcademenu;
-	Tetris * tetris;
-	Game * runningApp;
-	GameId currGame;
-	bool ChangeGame = false;
+	sf::RenderWindow * App;
+	sf::Clock clock;
+	std::vector<Game*> Games;
+	int currgame = 0;
+	bool running = true;
+	bool started;
 
-	void Update(sf::Clock& clock);
-	void Draw(sf::RenderWindow &window);
+	//Games//
+	ArcadeMenu am;
+	Tetris t;
 
 public:
 	ArcadeManager();
@@ -24,8 +26,7 @@ public:
 
 	void Start();
 	void Stop();
-	
-	void Events(sf::Event& e);
-	void Process(sf::Clock& clock, sf::RenderWindow &window);
+
+	void Process();
 };
 

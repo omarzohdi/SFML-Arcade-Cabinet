@@ -41,9 +41,10 @@ public:
 	Tetris();
 	~Tetris();
 
+	virtual int Run(sf::RenderWindow &App, sf::Clock&);
 	virtual void Update(sf::Clock& clock);
 	virtual void Draw(sf::RenderWindow &window);
-	virtual void CatchEvents(sf::Event& e);
+	virtual int CatchEvents(sf::Event& e);
 };
 
 #endif

@@ -12,14 +12,56 @@ Tetris::~Tetris()
 {
 }
 
-void Tetris::CatchEvents(sf::Event& e)
+
+int Tetris::Run(sf::RenderWindow &window, sf::Clock& clock)
+{
+	bool Running = true;
+	sf::Event e;
+
+	while (Running)
+	{
+		while (window.pollEvent(e))
+		{
+			if (e.type == sf::Event::Closed)
+				return (-1);
+
+			if (!this->CatchEvents(e)) return 0;
+		}
+
+		
+		this->Draw(window);
+		this->Update(clock);
+	}
+
+	return (-1);
+}
+
+int Tetris::CatchEvents(sf::Event& e)
 {
 	if (e.type == sf::Event::KeyPressed)
-		if (e.key.code == sf::Keyboard::Up) rotate = true;
-		else if (e.key.code == sf::Keyboard::Left) dx = -1;
-		else if (e.key.code == sf::Keyboard::Right) dx = 1;
-	
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) delay = 0.05f;
+	{
+		switch (e.key.code) 
+		{
+			case sf::Keyboard::Up:
+				this->rotate = true;
+			break;
+			case sf::Keyboard::Down:
+				this->delay = 0.05f;
+			break;
+			case sf::Keyboard::Left:
+				this->dx = -1;
+			break;
+			case sf::Keyboard::Right:
+				this->dx = 1;
+			break;
+			case sf::Keyboard::Escape:
+				return (0);
+			break;
+			default: break;
+		}
+	}
+		
+	return 1;
 }
 void Tetris::Update(sf::Clock& clock)
 {
@@ -39,10 +81,13 @@ void Tetris::ResetVars(sf::Clock& clock)
 	dx = 0;
 	rotate = 0.0f;
 	delay = 0.3f;
+	clock.restart();
 }
 
 void Tetris::Draw(sf::RenderWindow &window)
 {
+	window.clear(sf::Color::Black);
+
 	for (int i = 0; i < M; i++)
 	{
 		for (int j = 0; j < N; j++)
@@ -62,6 +107,7 @@ void Tetris::Draw(sf::RenderWindow &window)
 		window.draw(s);
 	}
 
+	window.display();
 }
 
 bool Tetris::checkCollision()
