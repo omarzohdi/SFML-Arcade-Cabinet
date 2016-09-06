@@ -77,7 +77,6 @@
     <ClCompile Include="ArcadeMenu.cpp" />
     <ClCompile Include="ArcadeStart.cpp" />
     <ClCompile Include="cScreen.cpp" />
-    <ClCompile Include="Game.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="screen_0.cpp" />
     <ClCompile Include="screen_1.cpp" />

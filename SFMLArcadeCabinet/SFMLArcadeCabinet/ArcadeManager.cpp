@@ -12,23 +12,15 @@ void ArcadeManager::Start()
 
 	this->App = new sf::RenderWindow(sf::VideoMode(320, 480), "Arcade Cabinet");
 	this->App->setMouseCursorVisible(false);
-	
-	///Add Games to List//
-	this->Games.push_back(&am);
-	this->Games.push_back(&t);
+
+	MainMenu = LoadGame(0);
 }
 
 void ArcadeManager::Stop() 
 {
 	delete this->App;
+	delete this->Games;
 	this->started = false;
-
-	///Clear List///
-	for (std::vector< Game* >::iterator it = Games.begin(); it != Games.end(); ++it)
-	{
-		delete (*it);
-	}
-	Games.clear();
 }
 
 void ArcadeManager::Process()
@@ -37,7 +29,30 @@ void ArcadeManager::Process()
 	{
 		while (this->currgame >= 0)
 		{
-			this->currgame = this->Games[this->currgame]->Run(*App, this->clock);
+			if (currgame == 0)
+				this->currgame = this->MainMenu->Run(*App, this->clock);
+			else if (currgame > 0)
+			{
+				if (this->Games != 0)
+					delete this->Games;
+				this->Games = LoadGame(this->currgame);
+			
+				this->currgame = this->Games->Run(*App, this->clock);
+			}
 		}
+	}
+}
+
+//Temporary Code!!!
+Game * ArcadeManager::LoadGame(int in)
+{
+	switch (in)
+	{
+		case 0:
+			return new ArcadeMenu();
+		case 1:
+			return new Tetris();
+		default:
+			return new ArcadeMenu();
 	}
 }

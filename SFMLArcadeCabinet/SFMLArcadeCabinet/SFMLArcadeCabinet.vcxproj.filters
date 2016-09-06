@@ -48,9 +48,6 @@
     <ClCompile Include="Tetris.cpp">
       <Filter>Source Files\Games</Filter>
     </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>Source Files\Games</Filter>
-    </ClCompile>
     <ClCompile Include="ArcadeMenu.cpp">
       <Filter>Source Files\Games</Filter>
     </ClCompile>

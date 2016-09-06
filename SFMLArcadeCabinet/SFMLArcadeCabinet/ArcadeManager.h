@@ -8,10 +8,10 @@ class ArcadeManager
 {
 private:
 	enum GameId { tetris_ , arkanoid_ , menu_ };
-
 	sf::RenderWindow * App;
 	sf::Clock clock;
-	std::vector<Game*> Games;
+	Game* Games;
+	Game* MainMenu;
 	int currgame = 0;
 	bool running = true;
 	bool started;
@@ -19,6 +19,8 @@ private:
 	//Games//
 	ArcadeMenu am;
 	Tetris t;
+
+	Game* LoadGame(int);
 
 public:
 	ArcadeManager();
