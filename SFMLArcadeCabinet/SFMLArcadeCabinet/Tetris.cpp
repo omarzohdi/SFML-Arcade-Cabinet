@@ -8,12 +8,9 @@ Tetris::Tetris()
 	s.setTextureRect(sf::IntRect(0, 0, 18, 18));
 }
 
-Tetris::~Tetris()
-{
-}
+Tetris::~Tetris(){}
 
-
-int Tetris::Run(sf::RenderWindow &window, sf::Clock& clock)
+int Tetris::Run(sf::RenderWindow &window)
 {
 	bool Running = true;
 	sf::Event e;
@@ -25,55 +22,48 @@ int Tetris::Run(sf::RenderWindow &window, sf::Clock& clock)
 			if (e.type == sf::Event::Closed)
 				return (-1);
 
-			if (!this->CatchEvents(e)) return 0;
+			if (e.type == sf::Event::KeyPressed)
+			{
+				switch (e.key.code)
+				{
+				case sf::Keyboard::Up:
+					this->rotate = true;
+					break;
+				case sf::Keyboard::Down:
+					this->delay = 0.05f;
+					break;
+				case sf::Keyboard::Left:
+					this->dx = -1;
+					break;
+				case sf::Keyboard::Right:
+					this->dx = 1;
+					break;
+				case sf::Keyboard::Escape:
+					return (0);
+					break;
+				default: break;
+				}
+			}
 		}
 
-		
 		this->Draw(window);
-		this->Update(clock);
+		this->Update();
 	}
 
 	return (-1);
 }
 
-int Tetris::CatchEvents(sf::Event& e)
-{
-	if (e.type == sf::Event::KeyPressed)
-	{
-		switch (e.key.code) 
-		{
-			case sf::Keyboard::Up:
-				this->rotate = true;
-			break;
-			case sf::Keyboard::Down:
-				this->delay = 0.05f;
-			break;
-			case sf::Keyboard::Left:
-				this->dx = -1;
-			break;
-			case sf::Keyboard::Right:
-				this->dx = 1;
-			break;
-			case sf::Keyboard::Escape:
-				return (0);
-			break;
-			default: break;
-		}
-	}
-		
-	return 1;
-}
-void Tetris::Update(sf::Clock& clock)
+void Tetris::Update()
 {
 	this->MovePiece();
 	this->RotatePiece();
-	this->Tick(clock);
+	this->Tick();
 	this->checkLine();
 
-	this->ResetVars(clock);
+	this->ResetVars();
 }
 
-void Tetris::ResetVars(sf::Clock& clock)
+void Tetris::ResetVars()
 {
 	float time = clock.getElapsedTime().asSeconds();
 	timer += time;
@@ -164,7 +154,7 @@ void Tetris::RotatePiece()
 	}
 }
 
-void Tetris::Tick(sf::Clock& clock)
+void Tetris::Tick()
 {
 	if (timer>delay)
 	{

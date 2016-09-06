@@ -1,10 +1,19 @@
 #include "ArcadeMenu.h"
 
+
 ArcadeMenu::ArcadeMenu()
 {
-	t.loadFromFile("images/tetris/tiles.png");
-	s.setTexture(t, true);
-	s.setTextureRect(sf::IntRect(0, 0, 18, 18));
+	Font.loadFromFile("verdanab.ttf");
+	
+	Menu1.setFont(Font);
+	Menu1.setCharacterSize(20);
+	Menu1.setString("Tetris");
+	Menu1.setPosition({ 280.f, 160.f });
+
+	Menu2.setFont(Font);
+	Menu2.setCharacterSize(20);
+	Menu2.setString("Exit");
+	Menu2.setPosition({ 280.f, 220.f });
 }
 
 ArcadeMenu::~ArcadeMenu()
@@ -12,39 +21,72 @@ ArcadeMenu::~ArcadeMenu()
 
 }
 
-int ArcadeMenu::Run(sf::RenderWindow &window, sf::Clock& clock)
+int ArcadeMenu::Run(sf::RenderWindow &window)
 {
 	bool Running = true;
 	sf::Event e;
 
 	while (Running)
 	{
+		this->Draw(window);
+
 		while (window.pollEvent(e))
 		{
+			if (e.type == sf::Event::Closed)
+				return (-1);
+
 			if (e.type == sf::Event::KeyPressed)
-				if (e.key.code == sf::Keyboard::Escape) return(0);
-			this->CatchEvents(e);
+			{
+				switch (e.key.code)
+				{
+					case sf::Keyboard::Up:
+						menu = 0;
+						break;
+					case sf::Keyboard::Down:
+						menu = 1;
+						break;
+					case sf::Keyboard::Return:
+						if (menu == 0)
+						{
+							//Let's get play !
+							playing = true;
+							return (2);
+						}
+						else
+						{
+							//Let's get work...
+							return (-1);
+						}
+						break;
+					default:
+						break;
+				}
+			}
 		}
 
-		this->Update(clock);
-		this->Draw(window);
 	}
 
 	return (-1);
 }
 
-void ArcadeMenu::Update(sf::Clock & clock)
-{
-}
-
 void ArcadeMenu::Draw(sf::RenderWindow & window)
 {
-	window.clear(sf::Color::Black);
-	window.draw(s);
-	window.display();
-}
+	if (menu == 0)
+	{
+		Menu1.setColor(sf::Color(255, 0, 0, 255));
+		Menu2.setColor(sf::Color(255, 255, 255, 255));
+	}
+	else
+	{
+		Menu1.setColor(sf::Color(255, 255, 255, 255));
+		Menu2.setColor(sf::Color(255, 0, 0, 255));
+	}
 
-int ArcadeMenu::CatchEvents(sf::Event & e)
-{
-	return 0;
+	//Clearing screen
+	window.clear(sf::Color::Black);
+	
+	//Drawing
+	window.draw(Menu1);
+	window.draw(Menu2);
+	window.display();
 }

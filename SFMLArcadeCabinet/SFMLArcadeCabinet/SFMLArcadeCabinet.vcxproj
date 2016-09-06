@@ -90,6 +90,7 @@
     <ClInclude Include="ArcadeMenu.h" />
     <ClInclude Include="cScreen.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameFactory.h" />
     <ClInclude Include="screen_0.h" />
     <ClInclude Include="screen_1.h" />
     <ClInclude Include="Tetris.h" />

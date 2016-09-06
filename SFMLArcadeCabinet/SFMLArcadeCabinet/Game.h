@@ -4,19 +4,27 @@
 #include <SFML/Graphics.hpp>
 #include <time.h>
 
+enum GameId {
+	exit_ = -1, 
+	menu_ = 0,
+	pause_,
+
+	tetris_, 
+	arkanoid_
+};
+
 class Game
 {
 
 protected:
 	Game() {};
+	sf::Clock clock;
 public:
 	
-	virtual int Run(sf::RenderWindow &App, sf::Clock&) = 0;
-	virtual void Update(sf::Clock&) = 0;
+	virtual int Run(sf::RenderWindow &App) = 0;
+	virtual void Update() = 0;
 	virtual void Draw(sf::RenderWindow&) = 0;
-	virtual int CatchEvents(sf::Event& e) = 0;
 
 	virtual ~Game() {};
 };
-
 #endif

@@ -1,26 +1,22 @@
 #include <SFML/Graphics.hpp>
 #include <time.h>
-#include "Tetris.h"
-#include "ArcadeMenu.h"
+#include "GameFactory.h"
 #include <iostream>
 
 class ArcadeManager
 {
 private:
-	enum GameId { tetris_ , arkanoid_ , menu_ };
 	sf::RenderWindow * App;
-	sf::Clock clock;
 	Game* Games;
 	Game* MainMenu;
-	int currgame = 0;
+	GameId currgame = menu_;
 	bool running = true;
 	bool started;
+	GameFactory F;
 
 	//Games//
 	ArcadeMenu am;
 	Tetris t;
-
-	Game* LoadGame(int);
 
 public:
 	ArcadeManager();

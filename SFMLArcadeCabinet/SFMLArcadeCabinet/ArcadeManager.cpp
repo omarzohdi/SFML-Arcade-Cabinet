@@ -10,16 +10,17 @@ void ArcadeManager::Start()
 {
 	this->started = true;
 
-	this->App = new sf::RenderWindow(sf::VideoMode(320, 480), "Arcade Cabinet");
+	this->App = new sf::RenderWindow(sf::VideoMode(600, 600), "Arcade Cabinet");
 	this->App->setMouseCursorVisible(false);
 
-	MainMenu = LoadGame(0);
+	MainMenu = F.CreateGame(menu_);
 }
 
 void ArcadeManager::Stop() 
 {
 	delete this->App;
-	delete this->Games;
+	if (this->Games != nullptr)
+		delete this->Games;
 	this->started = false;
 }
 
@@ -30,29 +31,15 @@ void ArcadeManager::Process()
 		while (this->currgame >= 0)
 		{
 			if (currgame == 0)
-				this->currgame = this->MainMenu->Run(*App, this->clock);
+				this->currgame = (GameId) this->MainMenu->Run(*App);
 			else if (currgame > 0)
 			{
-				if (this->Games != 0)
+				if (this->Games != nullptr)
 					delete this->Games;
-				this->Games = LoadGame(this->currgame);
+				this->Games = F.CreateGame(this->currgame);
 			
-				this->currgame = this->Games->Run(*App, this->clock);
+				this->currgame = (GameId) this->Games->Run(*App);
 			}
 		}
-	}
-}
-
-//Temporary Code!!!
-Game * ArcadeManager::LoadGame(int in)
-{
-	switch (in)
-	{
-		case 0:
-			return new ArcadeMenu();
-		case 1:
-			return new Tetris();
-		default:
-			return new ArcadeMenu();
 	}
 }

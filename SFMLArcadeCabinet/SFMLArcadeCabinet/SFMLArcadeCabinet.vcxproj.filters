@@ -77,5 +77,8 @@
     <ClInclude Include="ArcadeMenu.h">
       <Filter>Header Files\Games</Filter>
     </ClInclude>
+    <ClInclude Include="GameFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

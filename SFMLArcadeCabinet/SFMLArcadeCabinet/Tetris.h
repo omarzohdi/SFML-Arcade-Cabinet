@@ -3,7 +3,6 @@
 
 #include "Game.h"
 
-
 class Tetris : public Game
 {
 private:
@@ -34,17 +33,16 @@ private:
 	void MovePiece();
 	void RotatePiece();
 
-	void Tick(sf::Clock& clock);
-	void ResetVars(sf::Clock& clock);
+	void Tick();
+	void ResetVars();
 
 public:
 	Tetris();
 	~Tetris();
 
-	virtual int Run(sf::RenderWindow &App, sf::Clock&);
-	virtual void Update(sf::Clock& clock);
+	virtual int Run(sf::RenderWindow &App);
+	virtual void Update();
 	virtual void Draw(sf::RenderWindow &window);
-	virtual int CatchEvents(sf::Event& e);
 };
 
 #endif

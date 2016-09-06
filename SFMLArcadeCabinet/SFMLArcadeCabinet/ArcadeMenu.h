@@ -2,22 +2,27 @@
 #define ARCADEMENU
 
 #include "Game.h"
+#include  <iostream>
 class ArcadeMenu : public Game
 {
 	
 private:
-	sf::Texture t;
-	sf::Sprite s;
+	
+	sf::Font Font;
+	sf::Text Menu1;
+	sf::Text Menu2;
+	sf::Text Menu3;
+	int menu = 0;
+	bool playing = false;
 	
 
 public:
 	ArcadeMenu();
 	~ArcadeMenu();
 
-	virtual int Run(sf::RenderWindow &App, sf::Clock&);
-	virtual void Update(sf::Clock& clock);
+	virtual int Run(sf::RenderWindow &App);
+	virtual void Update() {};
 	virtual void Draw(sf::RenderWindow &window);
-	virtual int CatchEvents(sf::Event& e);
 };
 
 #endif
