@@ -3,7 +3,7 @@
 
 ArcadeMenu::ArcadeMenu()
 {
-	Font.loadFromFile("verdanab.ttf");
+	Font.loadFromFile("fonts/verdanab.ttf");
 	
 	Menu1.setFont(Font);
 	Menu1.setCharacterSize(20);
