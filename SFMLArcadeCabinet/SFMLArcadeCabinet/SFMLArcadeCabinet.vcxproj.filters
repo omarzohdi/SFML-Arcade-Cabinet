@@ -13,12 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\Screens">
-      <UniqueIdentifier>{77825533-5ef9-4b7b-8e09-0c1ffeb0cbd2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Screens">
-      <UniqueIdentifier>{833dbba3-9ac4-4e74-8d65-dfa353b76f7d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Games">
       <UniqueIdentifier>{1058e539-e4b0-4b88-bf71-ff0311dd7922}</UniqueIdentifier>
     </Filter>
@@ -27,23 +21,11 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ArcadeStart.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ArcadeManager.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="cScreen.cpp">
-      <Filter>Source Files\Screens</Filter>
-    </ClCompile>
-    <ClCompile Include="screen_0.cpp">
-      <Filter>Source Files\Screens</Filter>
-    </ClCompile>
-    <ClCompile Include="screen_1.cpp">
-      <Filter>Source Files\Screens</Filter>
     </ClCompile>
     <ClCompile Include="Tetris.cpp">
       <Filter>Source Files\Games</Filter>
@@ -58,15 +40,6 @@
   <ItemGroup>
     <ClInclude Include="ArcadeManager.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="cScreen.h">
-      <Filter>Header Files\Screens</Filter>
-    </ClInclude>
-    <ClInclude Include="screen_0.h">
-      <Filter>Header Files\Screens</Filter>
-    </ClInclude>
-    <ClInclude Include="screen_1.h">
-      <Filter>Header Files\Screens</Filter>
     </ClInclude>
     <ClInclude Include="Game.h">
       <Filter>Header Files\Games</Filter>

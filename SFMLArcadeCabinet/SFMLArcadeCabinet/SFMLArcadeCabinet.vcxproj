@@ -76,10 +76,6 @@
     <ClCompile Include="ArcadeManager.cpp" />
     <ClCompile Include="ArcadeMenu.cpp" />
     <ClCompile Include="ArcadeStart.cpp" />
-    <ClCompile Include="cScreen.cpp" />
-    <ClCompile Include="Main.cpp" />
-    <ClCompile Include="screen_0.cpp" />
-    <ClCompile Include="screen_1.cpp" />
     <ClCompile Include="Tetris.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -88,11 +84,8 @@
   <ItemGroup>
     <ClInclude Include="ArcadeManager.h" />
     <ClInclude Include="ArcadeMenu.h" />
-    <ClInclude Include="cScreen.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameFactory.h" />
-    <ClInclude Include="screen_0.h" />
-    <ClInclude Include="screen_1.h" />
     <ClInclude Include="Tetris.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
