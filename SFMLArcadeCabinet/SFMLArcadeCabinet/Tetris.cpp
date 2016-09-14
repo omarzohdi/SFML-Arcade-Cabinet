@@ -3,12 +3,10 @@
 Tetris::Tetris()
 {
 	srand(unsigned int(time(0)));
-	t.loadFromFile("images/tetris/tiles.png");
-	s.setTexture(t, true);
-	s.setTextureRect(sf::IntRect(0, 0, 18, 18));
-
-	s2.setTexture(t, true);
-	s2.setTextureRect(sf::IntRect(0, 0, 18, 18));
+	titlestexture.loadFromFile("images/tetris/tiles.png");
+	PieceSprite.setTexture(titlestexture, true);
+	PreviewSprite.setTexture(titlestexture, true);
+	GameArea.setTexture(titlestexture, true);
 
 	this->GetNewPiece(nextpiece);
 	this->SpawnPiece();
@@ -90,27 +88,29 @@ void Tetris::Draw(sf::RenderWindow &window)
 		for (int j = 0; j < N; j++)
 		{
 			if (field[i][j] == 0) continue;
-			s.setTextureRect(sf::IntRect(field[i][j] * 18, 0, 18, 18));
-			s.setPosition( float(j * 18), float(i * 18));
-			window.draw(s);
+			GameArea.setTextureRect(sf::IntRect(field[i][j] * 18, 0, 18, 18));
+			GameArea.setPosition( float(this->CenterSpriteHorizontally() + (j * 18) ),
+				float(i * 18));
+			window.draw(GameArea);
 		}
 	}
 
 	//draw the sprite into the game area.
 	for (int i = 0; i < 4; i++)
 	{
-		s.setTextureRect(sf::IntRect(colorNum * 18, 0, 18, 18));
-		s.setPosition(float(currpiece[i].x * 18), float(currpiece[i].y * 18));
-		window.draw(s);
+		PieceSprite.setTextureRect(sf::IntRect(colorNum * 18, 0, 18, 18));
+		PieceSprite.setPosition(float(this->CenterSpriteHorizontally() + currpiece[i].x * 18),
+			float(currpiece[i].y * 18));
+		window.draw(PieceSprite);
 	}
 
 	//draw next piece in preview area.
 	for (int i = 0; i < 4; i++)
 	{
-		s2.setTextureRect(sf::IntRect(nextcolornum * 18, 0, 18, 18));
-		s2.setPosition(float( (SCREENWIDTH - 72 ) + nextpiece[i].x * 18),
+		PreviewSprite.setTextureRect(sf::IntRect(nextcolornum * 18, 0, 18, 18));
+		PreviewSprite.setPosition(float( (SCREENWIDTH - 72 ) + nextpiece[i].x * 18),
 							float(10 + nextpiece[i].y * 18));
-		window.draw(s2);
+		window.draw(PreviewSprite);
 	}
 
 	window.display();
@@ -185,14 +185,16 @@ void Tetris::GetNewPiece(Point * newPoint)
 }
 void Tetris::SpawnPiece()
 {	
-
 	for (int i = 0; i < 4; i++)
 	{
 		this->currpiece[i] = this->nextpiece[i];
+		this->currpiece[i].x += 4;
 	}
+	
 	colorNum = nextcolornum;
 
 	this->GetNewPiece(nextpiece);
+	
 }
 void Tetris::Tick()
 {

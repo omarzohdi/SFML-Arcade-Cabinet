@@ -7,14 +7,15 @@
 class Tetris : public Game
 {
 private:
-	enum { M = 20 , N = 10};
-	struct Point {  int x, y;  };
+	enum { M = 20, N = 10 };
+	struct Point { int x, y; };
 
-	sf::Texture t;
-	sf::Sprite s;
-	sf::Sprite s2;
-	
-	Point currpiece[4] = { 0 }, temppiece[4] = { 0 }, nextpiece[4] = {0};
+	sf::Texture titlestexture;
+	sf::Sprite GameArea;
+	sf::Sprite PieceSprite;
+	sf::Sprite PreviewSprite;
+
+	Point currpiece[4] = { 0 }, temppiece[4] = { 0 }, nextpiece[4] = { 0 };
 	float timer = 0.0f, delay = 0.3f;
 	int dx = 0, colorNum = 1, nextcolornum = 1;
 	int field[M][N] = { 0 };
@@ -41,11 +42,32 @@ private:
 	void GetNewPiece(Point *);
 	void SpawnPiece();
 
+	inline float CenterSpriteHorizontally() { return ((SCREENWIDTH / 2.0f) - (N / 2 * 18)); };
 	//scoring formula:
 	//  1 line			2 lines			3 lines			4 lines  
 	//	40 * (n + 1)	100 * (n + 1)	300 * (n + 1)	1200 * (n + 1)
 	//points equal to the number of grid spaces that the 
 	//player has continuously soft dropped the piece.
+
+	/*
+	 Level    Drop speed
+         (frames/line)
+     00            48 (0.8 s)
+     01            43 (0.72s)
+     02            38 (0.63s) 
+     03            33 (0.55s) 
+     04            28 (0.47s) 
+     05            23 (0.38s)
+     06            18 (0.3 s) 
+     07            13 (0.22s)
+     08             8 (0.13s)
+     09             6 (0.1 s)
+  10-12             5 (0.08s) 
+  13-15             4 (0.07s)
+  16-18             3 (0.05s)
+  19-28             2 (0.03s)
+    29+             1 (0.02s)
+	*/
 
 public:
 	Tetris();
