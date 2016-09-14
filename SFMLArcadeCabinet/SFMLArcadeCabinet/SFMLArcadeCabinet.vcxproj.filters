@@ -19,6 +19,12 @@
     <Filter Include="Source Files\Games">
       <UniqueIdentifier>{7ba9a8f8-1974-4b42-91cf-9c37591a3a39}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Shaders">
+      <UniqueIdentifier>{6c6d1cf3-f411-4894-99f6-a52a1975dfe7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Shaders">
+      <UniqueIdentifier>{99c36a6c-c568-4d7f-86dc-4e268eb79370}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ArcadeStart.cpp">
@@ -32,6 +38,9 @@
     </ClCompile>
     <ClCompile Include="ArcadeMenu.cpp">
       <Filter>Source Files\Games</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderManager.cpp">
+      <Filter>Source Files\Shaders</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -51,6 +60,12 @@
       <Filter>Header Files\Games</Filter>
     </ClInclude>
     <ClInclude Include="GameFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderManager.h">
+      <Filter>Header Files\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Constants.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

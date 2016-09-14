@@ -8,12 +8,19 @@ ArcadeMenu::ArcadeMenu()
 	Menu1.setFont(Font);
 	Menu1.setCharacterSize(20);
 	Menu1.setString("Tetris");
-	Menu1.setPosition({ 280.f, 160.f });
+	
+	sf::FloatRect Menu1Rect = Menu1.getLocalBounds();
+	Menu1.setOrigin(Menu1Rect.left + Menu1Rect.width / 2.0f,
+		Menu1Rect.top + Menu1Rect.height / 2.0f);
+	Menu1.setPosition(sf::Vector2f(SCREENWIDTH / 2.0f, 160.0f));
 
 	Menu2.setFont(Font);
 	Menu2.setCharacterSize(20);
 	Menu2.setString("Exit");
-	Menu2.setPosition({ 280.f, 220.f });
+	sf::FloatRect Menu2Rect = Menu2.getLocalBounds();
+	Menu2.setOrigin(Menu2Rect.left + Menu2Rect.width / 2.0f,
+		Menu2Rect.top + Menu2Rect.height / 2.0f);
+	Menu2.setPosition(sf::Vector2f(SCREENWIDTH / 2.0f, 220.0f));
 }
 
 ArcadeMenu::~ArcadeMenu()

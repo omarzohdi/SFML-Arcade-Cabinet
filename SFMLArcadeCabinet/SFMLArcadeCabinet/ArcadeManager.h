@@ -2,6 +2,8 @@
 #include <time.h>
 #include "GameFactory.h"
 #include <iostream>
+#include "Constants.h"
+
 
 class ArcadeManager
 {
@@ -13,10 +15,6 @@ private:
 	bool running = true;
 	bool started;
 	GameFactory F;
-
-	//Games//
-	ArcadeMenu am;
-	Tetris t;
 
 public:
 	ArcadeManager();

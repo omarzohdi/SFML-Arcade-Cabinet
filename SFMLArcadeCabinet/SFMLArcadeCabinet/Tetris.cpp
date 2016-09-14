@@ -6,6 +6,12 @@ Tetris::Tetris()
 	t.loadFromFile("images/tetris/tiles.png");
 	s.setTexture(t, true);
 	s.setTextureRect(sf::IntRect(0, 0, 18, 18));
+
+	s2.setTexture(t, true);
+	s2.setTextureRect(sf::IntRect(0, 0, 18, 18));
+
+	this->GetNewPiece(nextpiece);
+	this->SpawnPiece();
 }
 
 Tetris::~Tetris(){}
@@ -78,6 +84,7 @@ void Tetris::Draw(sf::RenderWindow &window)
 {
 	window.clear(sf::Color::Black);
 
+	//Fix this use a different sprite for the playing field!
 	for (int i = 0; i < M; i++)
 	{
 		for (int j = 0; j < N; j++)
@@ -93,8 +100,17 @@ void Tetris::Draw(sf::RenderWindow &window)
 	for (int i = 0; i < 4; i++)
 	{
 		s.setTextureRect(sf::IntRect(colorNum * 18, 0, 18, 18));
-		s.setPosition(float(a[i].x * 18), float(a[i].y * 18));
+		s.setPosition(float(currpiece[i].x * 18), float(currpiece[i].y * 18));
 		window.draw(s);
+	}
+
+	//draw next piece in preview area.
+	for (int i = 0; i < 4; i++)
+	{
+		s2.setTextureRect(sf::IntRect(nextcolornum * 18, 0, 18, 18));
+		s2.setPosition(float( (SCREENWIDTH - 72 ) + nextpiece[i].x * 18),
+							float(10 + nextpiece[i].y * 18));
+		window.draw(s2);
 	}
 
 	window.display();
@@ -104,8 +120,8 @@ bool Tetris::checkCollision()
 {
 	for (int i = 0; i < 4; i++)
 	{
-		if (a[i].x < 0 || a[i].x >= N || a[i].y >= M) return 0;
-		else if (field[a[i].y][a[i].x]) return 0;
+		if (currpiece[i].x < 0 || currpiece[i].x >= N || currpiece[i].y >= M) return 0;
+		else if (field[currpiece[i].y][currpiece[i].x]) return 0;
 	}
 	return 1;
 };
@@ -131,46 +147,66 @@ void Tetris::MovePiece()
 {
 	for (int i = 0; i < 4; i++)
 	{
-		b[i] = a[i];
-		a[i].x += dx;
+		temppiece[i] = currpiece[i];
+		currpiece[i].x += dx;
 	}
-	if (!checkCollision()) for (int i = 0; i < 4; i++) a[i] = b[i];
+	if (!checkCollision()) for (int i = 0; i < 4; i++) currpiece[i] = temppiece[i];
 }
 
 void Tetris::RotatePiece()
 {
 	if (rotate)
 	{
-		Point p = a[1]; //center of rotation
+		Point p = currpiece[1]; //center of rotation
 		for (int i = 0; i < 4; i++)
 		{
-			int x = a[i].y - p.y;
-			int y = a[i].x - p.x;
+			int x = currpiece[i].y - p.y;
+			int y = currpiece[i].x - p.x;
 
-			a[i].x = p.x - x;
-			a[i].y = p.y + y;
+			currpiece[i].x = p.x - x;
+			currpiece[i].y = p.y + y;
 		}
-		if (!checkCollision()) for (int i = 0; i < 4; i++) a[i] = b[i];
+		if (!checkCollision()) for (int i = 0; i < 4; i++) currpiece[i] = temppiece[i];
 	}
 }
 
+void Tetris::GetNewPiece(Point * newPoint)
+{
+
+	//Spawn a new piece.
+	nextcolornum = 1 + rand() % 7;
+
+	int n = rand() % 7;
+	for (int i = 0; i<4; i++)
+	{
+		newPoint[i].x = figures[n][i] % 2;
+		newPoint[i].y = figures[n][i] / 2;
+	}
+}
+void Tetris::SpawnPiece()
+{	
+
+	for (int i = 0; i < 4; i++)
+	{
+		this->currpiece[i] = this->nextpiece[i];
+	}
+	colorNum = nextcolornum;
+
+	this->GetNewPiece(nextpiece);
+}
 void Tetris::Tick()
 {
 	if (timer>delay)
 	{
-		for (int i = 0; i<4; i++) { b[i] = a[i]; a[i].y += 1; }
+		//move into temporary
+		for (int i = 0; i<4; i++) { temppiece[i] = currpiece[i]; currpiece[i].y += 1; }
 
 		if (!checkCollision())
 		{
-			for (int i = 0; i<4; i++) field[b[i].y][b[i].x] = colorNum;
+			//since it hit the end of the level restore the temp.
+			for (int i = 0; i<4; i++) field[temppiece[i].y][temppiece[i].x] = colorNum;
 
-			colorNum = 1 + rand() % 7;
-			int n = rand() % 7;
-			for (int i = 0; i<4; i++)
-			{
-				a[i].x = figures[n][i] % 2;
-				a[i].y = figures[n][i] / 2;
-			}
+			this->SpawnPiece();
 		}
 
 		timer = 0;

@@ -1,8 +1,10 @@
 #ifndef ARCADEMENU
 #define ARCADEMENU
 
+#include "Constants.h"
 #include "Game.h"
 #include  <iostream>
+
 class ArcadeMenu : public Game
 {
 	
