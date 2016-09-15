@@ -10,6 +10,17 @@ Tetris::Tetris()
 
 	this->GetNewPiece(nextpiece);
 	this->SpawnPiece();
+
+	Font.loadFromFile("fonts/verdanab.ttf");
+
+	ScoreText.setFont(Font);
+	ScoreText.setCharacterSize(20);
+	ScoreText.setString("0");
+
+	sf::FloatRect ScoreTextRect = ScoreText.getLocalBounds();
+	ScoreText.setOrigin(ScoreTextRect.left + ScoreTextRect.width / 2.0f,
+		ScoreTextRect.top + ScoreTextRect.height / 2.0f);
+	ScoreText.setPosition(sf::Vector2f(SCREENWIDTH / 2.0f, 500.0f));
 }
 
 Tetris::~Tetris(){}
@@ -63,6 +74,7 @@ void Tetris::Update()
 	this->RotatePiece();
 	this->Tick();
 	this->checkLine();
+	this->UpdateScoreAndDifficulty();
 
 	this->ResetVars();
 }
@@ -113,6 +125,10 @@ void Tetris::Draw(sf::RenderWindow &window)
 		window.draw(PreviewSprite);
 	}
 
+
+	ScoreText.setColor(sf::Color(255, 255, 255, 255));
+	window.draw(ScoreText);
+
 	window.display();
 }
 
@@ -128,17 +144,25 @@ bool Tetris::checkCollision()
 
 void Tetris::checkLine()
 {
+	//M is height 20
+	//N is width 10
 	int k = M - 1;
-	for (int i = M - 1; i > 0; i--)
+	for (int i = M - 1; i > 0; --i)
 	{
-		int count = 0;
+		int count = 0; 
+		
 		for (int j = 0; j < N; j++)
 		{
+			//increment Count of blocks 
 			if (field[i][j]) count++;
+			
+			//Override K line with above line.
 			field[k][j] = field[i][j];
-
 		}
-		if (count < N)  k--;
+		
+		//decrement K if the line is not full
+		if (count < N) { k--; }
+		else { linescombo++; totlines++; }
 
 	}
 }
@@ -215,3 +239,71 @@ void Tetris::Tick()
 	}
 }
 
+void Tetris::UpdateScoreAndDifficulty()
+{
+
+	if (linescombo > 4)
+	{
+		int fval = linescombo / 4;
+		int sval = linescombo % 4;
+
+		for (int i = 0; i < fval; ++i)
+		{
+			score += this->UpdateScore(4);
+		}
+
+		score += this->UpdateScore(sval);
+		
+		ScoreText.setString(std::to_string(score));
+	}
+	else if (linescombo > 0)
+	{
+		score += this->UpdateScore(linescombo);
+		ScoreText.setString(std::to_string(score));
+	}
+
+	linescombo = 0;
+}
+
+int Tetris::UpdateScore(int inVal)
+{
+	int multiplier = 0;
+
+	switch (inVal)
+	{
+		case 1: multiplier = 40;	break;
+		case 2: multiplier = 100;	break;
+		case 3: multiplier = 300;	break;
+		case 4: multiplier = 1200;	break;
+	}
+
+	return ( multiplier * (diff + 1) );
+}
+
+float Tetris::UpdateDifficulty()
+{
+	return 0.0f;
+	//find a nicer solution
+	/*
+	switch (totlines)
+	{
+	case 0: return 0.8f;
+	case 1: return 0.72f;
+	case 2: return 0.63f;
+	case 3: return 0.55f;
+	case 4: return 0.47f;
+	case 5: return 0.38f;
+	case 6: return 0.3f;
+	case 7: return 0.22f;
+	case 8: return 0.13f;
+	case 9: return 0.1f;
+	case 10 ... 12: return 0.08f;
+	case 13: case 14: case 15: return 0.07f;
+	case 16: case 17: case 18: return 0.05f;
+	case 19: case 14: case 15:
+	default:
+		return 0.025f;
+		break;
+	}
+	*/
+}

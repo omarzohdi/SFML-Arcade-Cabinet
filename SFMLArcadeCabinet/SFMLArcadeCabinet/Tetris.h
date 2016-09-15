@@ -15,9 +15,13 @@ private:
 	sf::Sprite PieceSprite;
 	sf::Sprite PreviewSprite;
 
+	sf::Font Font;
+	sf::Text ScoreText;
+
 	Point currpiece[4] = { 0 }, temppiece[4] = { 0 }, nextpiece[4] = { 0 };
-	float timer = 0.0f, delay = 0.3f;
-	int dx = 0, colorNum = 1, nextcolornum = 1;
+	float timer = 0.0f, delay = 0.8f;
+	int dx = 0, colorNum = 1, nextcolornum = 1, 
+		linescombo = 0, score = 0, diff = 0, totlines = 0;
 	int field[M][N] = { 0 };
 	int figures[7][4] = {
 		1,3,5,7, //I
@@ -42,10 +46,11 @@ private:
 	void GetNewPiece(Point *);
 	void SpawnPiece();
 
+	void UpdateScoreAndDifficulty();
+	int UpdateScore(int);
+	float UpdateDifficulty();
+
 	inline float CenterSpriteHorizontally() { return ((SCREENWIDTH / 2.0f) - (N / 2 * 18)); };
-	//scoring formula:
-	//  1 line			2 lines			3 lines			4 lines  
-	//	40 * (n + 1)	100 * (n + 1)	300 * (n + 1)	1200 * (n + 1)
 	//points equal to the number of grid spaces that the 
 	//player has continuously soft dropped the piece.
 
