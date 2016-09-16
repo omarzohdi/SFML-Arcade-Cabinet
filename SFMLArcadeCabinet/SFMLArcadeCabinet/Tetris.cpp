@@ -196,7 +196,6 @@ void Tetris::RotatePiece()
 
 void Tetris::GetNewPiece(Point * newPoint)
 {
-
 	//Spawn a new piece.
 	nextcolornum = 1 + rand() % 7;
 
@@ -209,6 +208,8 @@ void Tetris::GetNewPiece(Point * newPoint)
 }
 void Tetris::SpawnPiece()
 {	
+	
+
 	for (int i = 0; i < 4; i++)
 	{
 		this->currpiece[i] = this->nextpiece[i];
@@ -217,8 +218,20 @@ void Tetris::SpawnPiece()
 	
 	colorNum = nextcolornum;
 
+	this->CheckForLossCondition();
+
 	this->GetNewPiece(nextpiece);
 	
+}
+bool Tetris::CheckForLossCondition()
+{
+	for (int i = 0; i < 4; ++i)
+	{
+		if (field[currpiece[i].x][currpiece[i].y] != 0)
+			return true;
+
+	}
+	return false;
 }
 void Tetris::Tick()
 {
@@ -241,7 +254,7 @@ void Tetris::Tick()
 
 void Tetris::UpdateScoreAndDifficulty()
 {
-
+	////Score Update
 	if (linescombo > 4)
 	{
 		int fval = linescombo / 4;
@@ -263,6 +276,11 @@ void Tetris::UpdateScoreAndDifficulty()
 	}
 
 	linescombo = 0;
+
+	////Difficulty Update
+	if (totlines % 10 == 0)
+		delay = UpdateDifficulty();
+
 }
 
 int Tetris::UpdateScore(int inVal)
@@ -282,28 +300,20 @@ int Tetris::UpdateScore(int inVal)
 
 float Tetris::UpdateDifficulty()
 {
-	return 0.0f;
-	//find a nicer solution
-	/*
-	switch (totlines)
-	{
-	case 0: return 0.8f;
-	case 1: return 0.72f;
-	case 2: return 0.63f;
-	case 3: return 0.55f;
-	case 4: return 0.47f;
-	case 5: return 0.38f;
-	case 6: return 0.3f;
-	case 7: return 0.22f;
-	case 8: return 0.13f;
-	case 9: return 0.1f;
-	case 10 ... 12: return 0.08f;
-	case 13: case 14: case 15: return 0.07f;
-	case 16: case 17: case 18: return 0.05f;
-	case 19: case 14: case 15:
-	default:
-		return 0.025f;
-		break;
-	}
-	*/
+	if (totlines == 0) return 0.8f;
+	else if (totlines == 10) return 0.72f;
+	else if (totlines == 20) return 0.63f;
+	else if (totlines == 30) return 0.55f;
+	else if (totlines == 40) return 0.47f;
+	else if (totlines == 50) return 0.38f;
+	else if (totlines == 60) return 0.3f;
+	else if (totlines == 70) return 0.22f;
+	else if (totlines == 80) return 0.13f;
+	else if (totlines == 90) return 0.1f;
+	else if (totlines >= 100 && totlines <= 120) return 0.08f;
+	else if (totlines >= 130 && totlines <= 150) return 0.07f;
+	else if (totlines >= 160 && totlines <= 180) return 0.05f;
+	else if (totlines >= 190 && totlines <= 280) return 0.03f;
+	else if (totlines >= 290) return 0.02f;
+	else return 0.8f;
 }
