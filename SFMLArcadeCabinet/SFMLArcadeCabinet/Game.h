@@ -8,6 +8,7 @@ enum GameId {
 	exit_ = -1, 
 	menu_ = 0,
 	pause_,
+	gameover_,
 
 	tetris_, 
 	arkanoid_

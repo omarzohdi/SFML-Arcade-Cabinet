@@ -32,7 +32,7 @@ private:
 		3,5,7,6, //J
 		2,3,4,5, //O
 	};
-	bool rotate = 0;
+	bool rotate = 0, gameover = 0;
 
 	bool checkCollision();
 	void checkLine();
@@ -50,7 +50,7 @@ private:
 	int UpdateScore(int);
 	float UpdateDifficulty();
 
-	bool CheckForLossCondition();
+	bool CheckForGameOverCondition();
 
 	inline float CenterSpriteHorizontally() { return ((SCREENWIDTH / 2.0f) - (N / 2 * 18)); };
 	//points equal to the number of grid spaces that the 

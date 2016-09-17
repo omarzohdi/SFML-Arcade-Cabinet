@@ -70,13 +70,20 @@ int Tetris::Run(sf::RenderWindow &window)
 
 void Tetris::Update()
 {
-	this->MovePiece();
-	this->RotatePiece();
-	this->Tick();
-	this->checkLine();
-	this->UpdateScoreAndDifficulty();
+	if (!gameover)
+	{ 
+		this->MovePiece();
+		this->RotatePiece();
+		this->Tick();
+		this->checkLine();
+		this->UpdateScoreAndDifficulty();
 
-	this->ResetVars();
+		this->ResetVars();
+	}
+	else
+	{
+		//Start GameOver Screen.
+	}
 }
 
 void Tetris::ResetVars()
@@ -206,10 +213,9 @@ void Tetris::GetNewPiece(Point * newPoint)
 		newPoint[i].y = figures[n][i] / 2;
 	}
 }
+
 void Tetris::SpawnPiece()
 {	
-	
-
 	for (int i = 0; i < 4; i++)
 	{
 		this->currpiece[i] = this->nextpiece[i];
@@ -218,21 +224,24 @@ void Tetris::SpawnPiece()
 	
 	colorNum = nextcolornum;
 
-	this->CheckForLossCondition();
-
 	this->GetNewPiece(nextpiece);
 	
 }
-bool Tetris::CheckForLossCondition()
+
+bool Tetris::CheckForGameOverCondition()
 {
 	for (int i = 0; i < 4; ++i)
 	{
-		if (field[currpiece[i].x][currpiece[i].y] != 0)
+		
+		if (field[currpiece[i].y][currpiece[i].x] != 0)
+		{
 			return true;
+		}
 
 	}
 	return false;
 }
+
 void Tetris::Tick()
 {
 	if (timer>delay)
@@ -246,6 +255,7 @@ void Tetris::Tick()
 			for (int i = 0; i<4; i++) field[temppiece[i].y][temppiece[i].x] = colorNum;
 
 			this->SpawnPiece();
+			this->gameover = this->CheckForGameOverCondition();
 		}
 
 		timer = 0;
