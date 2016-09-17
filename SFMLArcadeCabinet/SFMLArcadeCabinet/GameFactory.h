@@ -4,7 +4,7 @@
 #include "Game.h";
 #include "Tetris.h";
 #include "ArcadeMenu.h";
-
+#include "GameOver.h"
 class GameFactory
 {
 public:
@@ -17,6 +17,8 @@ public:
 			return new ArcadeMenu();
 		case tetris_:
 			return new Tetris();
+		case gameover_:
+			return new GameOver();
 		default:
 			return new ArcadeMenu();
 		}

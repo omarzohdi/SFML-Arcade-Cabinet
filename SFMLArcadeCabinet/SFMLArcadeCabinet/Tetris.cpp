@@ -63,6 +63,8 @@ int Tetris::Run(sf::RenderWindow &window)
 
 		this->Draw(window);
 		this->Update();
+
+		if (gameover) return (2);
 	}
 
 	return (-1);
@@ -79,10 +81,6 @@ void Tetris::Update()
 		this->UpdateScoreAndDifficulty();
 
 		this->ResetVars();
-	}
-	else
-	{
-		//Start GameOver Screen.
 	}
 }
 
