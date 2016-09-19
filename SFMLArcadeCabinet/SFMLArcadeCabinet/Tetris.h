@@ -11,17 +11,22 @@ private:
 	struct Point { int x, y; };
 
 	sf::Texture titlestexture;
+	sf::Texture backgroudntexture;
+
 	sf::Sprite GameArea;
+	sf::Sprite backgroundsprite;
 	sf::Sprite PieceSprite;
 	sf::Sprite PreviewSprite;
 
 	sf::Font Font;
 	sf::Text ScoreText;
+	sf::Text HighScoreText;
+	sf::Text HighScore;
 
 	Point currpiece[4] = { 0 }, temppiece[4] = { 0 }, nextpiece[4] = { 0 };
 	float timer = 0.0f, delay = 0.8f;
 	int dx = 0, colorNum = 1, nextcolornum = 1, 
-		linescombo = 0, score = 0, diff = 0, totlines = 0;
+		linescombo = 0, score = 0, highscore = 0, diff = 0, totlines = 0;
 	int field[M][N] = { 0 };
 	int figures[7][4] = {
 		1,3,5,7, //I

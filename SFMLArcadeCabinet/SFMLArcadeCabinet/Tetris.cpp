@@ -4,6 +4,9 @@ Tetris::Tetris()
 {
 	srand(unsigned int(time(0)));
 	titlestexture.loadFromFile("images/tetris/tiles.png");
+	backgroudntexture.loadFromFile("images/tetris/tetrisbg.png");
+
+	backgroundsprite.setTexture(backgroudntexture, true);
 	PieceSprite.setTexture(titlestexture, true);
 	PreviewSprite.setTexture(titlestexture, true);
 	GameArea.setTexture(titlestexture, true);
@@ -20,7 +23,25 @@ Tetris::Tetris()
 	sf::FloatRect ScoreTextRect = ScoreText.getLocalBounds();
 	ScoreText.setOrigin(ScoreTextRect.left + ScoreTextRect.width / 2.0f,
 		ScoreTextRect.top + ScoreTextRect.height / 2.0f);
-	ScoreText.setPosition(sf::Vector2f(SCREENWIDTH / 2.0f, 500.0f));
+	ScoreText.setPosition(sf::Vector2f(90, 50.0f));
+
+	HighScoreText.setFont(Font);
+	HighScoreText.setCharacterSize(20);
+	HighScoreText.setString("\tScore \n\n Highscore");
+
+	sf::FloatRect HighScoreTextRect = HighScoreText.getLocalBounds();
+	HighScoreText.setOrigin(HighScoreTextRect.left + HighScoreTextRect.width / 2.0f,
+		HighScoreTextRect.top + HighScoreTextRect.height / 2.0f);
+	HighScoreText.setPosition(sf::Vector2f( 95.0f , 55.0f));
+
+	HighScore.setFont(Font);
+	HighScore.setCharacterSize(20);
+	HighScore.setString(std::to_string(highscore));
+
+	sf::FloatRect HighScoreRect = HighScore.getLocalBounds();
+	HighScore.setOrigin(HighScoreRect.left + HighScoreRect.width / 2.0f,
+		HighScoreRect.top + HighScoreRect.height / 2.0f);
+	HighScore.setPosition(sf::Vector2f(90.0f, 105.0f));
 }
 
 Tetris::~Tetris(){}
@@ -99,6 +120,8 @@ void Tetris::Draw(sf::RenderWindow &window)
 {
 	window.clear(sf::Color::Black);
 
+	window.draw(backgroundsprite);
+
 	//Fix this use a different sprite for the playing field!
 	for (int i = 0; i < M; i++)
 	{
@@ -125,14 +148,19 @@ void Tetris::Draw(sf::RenderWindow &window)
 	for (int i = 0; i < 4; i++)
 	{
 		PreviewSprite.setTextureRect(sf::IntRect(nextcolornum * 18, 0, 18, 18));
-		PreviewSprite.setPosition(float( (SCREENWIDTH - 72 ) + nextpiece[i].x * 18),
-							float(10 + nextpiece[i].y * 18));
+		PreviewSprite.setPosition(float( (SCREENWIDTH - 115 ) + nextpiece[i].x * 18),
+							float(20 + nextpiece[i].y * 18));
 		window.draw(PreviewSprite);
 	}
 
-
 	ScoreText.setColor(sf::Color(255, 255, 255, 255));
 	window.draw(ScoreText);
+
+	HighScoreText.setColor(sf::Color(255, 255, 255, 255));
+	window.draw(HighScoreText);
+	HighScore.setColor(sf::Color(255, 255, 255, 255));
+	window.draw(HighScore);
+
 
 	window.display();
 }
@@ -262,6 +290,13 @@ void Tetris::Tick()
 
 void Tetris::UpdateScoreAndDifficulty()
 {
+	if (highscore < score)
+	{
+		highscore = score;
+		HighScore.setString(std::to_string(highscore));
+	}
+		
+
 	////Score Update
 	if (linescombo > 4)
 	{
