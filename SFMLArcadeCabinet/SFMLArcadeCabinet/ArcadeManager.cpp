@@ -12,6 +12,7 @@ void ArcadeManager::Start()
 
 	this->App = new sf::RenderWindow(sf::VideoMode(SCREENWIDTH, SCREENHEIGHT), "Arcade Cabinet");
 	this->App->setMouseCursorVisible(false);
+	this->App->setFramerateLimit(60);
 
 	MainMenu = F.CreateGame(menu_);
 }
