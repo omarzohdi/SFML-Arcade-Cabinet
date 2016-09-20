@@ -73,6 +73,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Arkanoid .cpp" />
     <ClCompile Include="ArcadeManager.cpp" />
     <ClCompile Include="ArcadeMenu.cpp" />
     <ClCompile Include="ArcadeStart.cpp" />
@@ -84,6 +85,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Arkanoid.h" />
     <ClInclude Include="ArcadeManager.h" />
     <ClInclude Include="ArcadeMenu.h" />
     <ClInclude Include="Constants.h" />

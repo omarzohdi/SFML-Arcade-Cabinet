@@ -1,10 +1,12 @@
 #ifndef GAMEFACTORY
 #define GAMEFACTORY
 
-#include "Game.h";
-#include "Tetris.h";
-#include "ArcadeMenu.h";
+#include "Game.h"
+#include "Tetris.h"
+#include "ArcadeMenu.h"
 #include "GameOver.h"
+#include "Arkanoid.h"
+
 class GameFactory
 {
 public:
@@ -19,6 +21,8 @@ public:
 			return new Tetris();
 		case gameover_:
 			return new GameOver();
+		case arkanoid_:
+			return new Arkanoid();
 		default:
 			return new ArcadeMenu();
 		}

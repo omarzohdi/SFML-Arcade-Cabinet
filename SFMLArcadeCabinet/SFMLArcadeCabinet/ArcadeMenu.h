@@ -11,12 +11,13 @@ class ArcadeMenu : public Game
 private:
 	
 	sf::Font Font;
-	sf::Text Menu1;
-	sf::Text Menu2;
-	sf::Text Menu3;
+	sf::Text MenuTetris;
+	sf::Text MenuExit;
+	sf::Text MenuArkanoid;
 	int menu = 0;
 	bool playing = false;
-	
+
+	int startGame();
 
 public:
 	ArcadeMenu();

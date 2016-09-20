@@ -45,6 +45,9 @@
     <ClCompile Include="GameOver.cpp">
       <Filter>Source Files\Games</Filter>
     </ClCompile>
+    <ClCompile Include="Arkanoid .cpp">
+      <Filter>Source Files\Games</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -72,6 +75,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GameOver.h">
+      <Filter>Header Files\Games</Filter>
+    </ClInclude>
+    <ClInclude Include="Arkanoid.h">
       <Filter>Header Files\Games</Filter>
     </ClInclude>
   </ItemGroup>

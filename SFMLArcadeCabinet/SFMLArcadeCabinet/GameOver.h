@@ -1,4 +1,6 @@
-#pragma once
+#ifndef GAMEOVER
+#define GAMEOVER
+
 #include "Game.h"
 #include "Constants.h"
 
@@ -23,4 +25,4 @@ public:
 	virtual void Update() {};
 	virtual void Draw(sf::RenderWindow&);
 };
-
+#endif
